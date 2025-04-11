@@ -7,6 +7,15 @@ A Model Context Protocol (MCP) server for Claude Desktop that enables Google Ima
 
 ## Quick Install
 
+### For Unix-based systems (macOS, Linux)
+
+```bash
+# One-line installer
+curl -fsSL https://raw.githubusercontent.com/Arnoutopya/claude-google-images-mcp/main/install.sh | bash
+```
+
+### For all systems
+
 ```bash
 # Install directly from GitHub
 npx github:Arnoutopya/claude-google-images-mcp setup
@@ -29,13 +38,19 @@ Then restart Claude Desktop.
 
 ## Installation Methods
 
-### Method 1: Install from GitHub (Recommended)
+### Method 1: One-line Installer (Unix-based systems)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Arnoutopya/claude-google-images-mcp/main/install.sh | bash
+```
+
+### Method 2: Install from GitHub
 
 ```bash
 npx github:Arnoutopya/claude-google-images-mcp setup
 ```
 
-### Method 2: Clone and Install Locally
+### Method 3: Clone and Install Locally
 
 ```bash
 git clone https://github.com/Arnoutopya/claude-google-images-mcp.git
@@ -44,7 +59,7 @@ npm install
 node install.js
 ```
 
-### Method 3: Manual Configuration
+### Method 4: Manual Configuration
 
 If you prefer to manually configure Claude Desktop:
 
