@@ -2,9 +2,8 @@
  * Utility functions for the Google Images MCP
  */
 
-const fs = require('fs');
 const path = require('path');
-const { defaults } = require('./config');
+const fs = require('fs');
 
 /**
  * Ensure a directory exists, creating it if necessary
@@ -32,7 +31,7 @@ async function ensureDirectoryExists(dirPath) {
 function generateUniqueFilename(url, query) {
   const timestamp = Date.now();
   const urlHash = hashString(url).substr(0, 8);
-  const cleanQuery = query.replace(/[^a-z0-9]/gi, '_').toLowerCase().substr(0, 30);
+  const cleanQuery = query ? query.replace(/[^a-z0-9]/gi, '_').toLowerCase().substr(0, 30) : 'image';
   const extension = getFileExtension(url);
   
   return `${cleanQuery}-${timestamp}-${urlHash}${extension}`;
@@ -107,6 +106,37 @@ function formatFileSize(bytes) {
 }
 
 /**
+ * Extract image data from Google search results HTML
+ * @param {string} html - HTML string of Google Images search results page
+ * @returns {Array} Array of image objects
+ */
+function extractImagesFromHtml(html) {
+  const images = [];
+  const imgRegex = /"ou":"(.*?)".*?"pt":"(.*?)".*?"ru":"(.*?)"/g;
+  let match;
+  
+  while ((match = imgRegex.exec(html)) !== null) {
+    try {
+      // Decode URLs
+      const imageUrl = match[1].replace(/\\u003d/g, '=').replace(/\\u0026/g, '&');
+      const title = match[2].replace(/\\u003d/g, '=').replace(/\\u0026/g, '&');
+      const sourceUrl = match[3].replace(/\\u003d/g, '=').replace(/\\u0026/g, '&');
+      
+      images.push({
+        url: imageUrl,
+        title: title,
+        source: sourceUrl,
+        thumbnail: imageUrl
+      });
+    } catch (error) {
+      console.error('Error processing image data:', error);
+    }
+  }
+  
+  return images;
+}
+
+/**
  * Validate image URL to ensure it's a supported image format
  * @param {string} url - URL to validate
  * @returns {boolean} True if URL is likely a valid image
@@ -150,8 +180,10 @@ module.exports = {
   ensureDirectoryExists,
   generateUniqueFilename,
   getFileExtension,
+  hashString,
   sanitizeInput,
   formatFileSize,
   isValidImageUrl,
-  stripHtml
+  stripHtml,
+  extractImagesFromHtml
 };
