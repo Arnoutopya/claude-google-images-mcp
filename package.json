@@ -1,15 +1,15 @@
 {
-  "name": "claude-google-images-mcp",
+  "name": "@arnoutopya/claude-google-images-mcp",
   "version": "1.0.0",
   "description": "A Mod Content Pack for Claude Desktop that helps retrieve images from Google Images",
   "main": "index.js",
   "bin": {
-    "install-google-images-mcp": "./install.js"
+    "claude-google-images-mcp": "./server.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "install-mcp": "node install.js"
+    "start": "node server.js",
+    "setup": "node install.js"
   },
   "keywords": [
     "claude",
@@ -21,7 +21,9 @@
   "author": "Arnoutopya",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^2.6.9"
+    "node-fetch": "^2.6.9",
+    "express": "^4.18.2",
+    "ws": "^8.14.2"
   },
   "engines": {
     "node": ">=14.0.0"
