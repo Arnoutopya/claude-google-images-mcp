@@ -4,12 +4,14 @@
   "description": "A Mod Content Pack for Claude Desktop that helps retrieve images from Google Images",
   "main": "index.js",
   "bin": {
-    "claude-google-images-mcp": "./server.js"
+    "claude-google-images-mcp": "./server.js",
+    "claude-google-images-setup": "./install.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "setup": "node install.js"
+    "setup": "node install.js",
+    "postinstall": "node install.js"
   },
   "keywords": [
     "claude",
