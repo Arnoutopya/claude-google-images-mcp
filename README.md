@@ -3,155 +3,168 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-A Mod Content Pack for Claude Desktop that helps retrieve images from Google Images search results. This MCP enables you to search, browse, and download images directly from your Claude Desktop interface.
+A Model Context Protocol (MCP) server for Claude Desktop that enables Google Images search directly within Claude. This MCP allows Claude to search, browse, and download images from Google Images with simple commands.
 
-## 🌟 Features
+## Features
 
-- **Simple Interface**: Clean, intuitive interface for searching Google Images
-- **Dynamic Search**: Get real-time search results for any query
-- **Configurable Settings**: Customize your search with filters and options
-- **Direct Downloads**: Save images with a single click
-- **Responsive Design**: Works on any screen size
-- **Dark Mode Support**: Automatic theme detection based on system preferences
-- **No API Key Required**: Works without requiring any Google API credentials
+- **Google Images Search**: Search for images using natural language queries
+- **Image Browsing**: View search results directly within Claude Desktop
+- **Direct Download**: Save images to your local machine
+- **Configurable Settings**: Customize searches with safe search, image type filters, and result limits
+- **No API Key Required**: Works without needing any Google API credentials
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js 14.0.0 or higher
-- Claude Desktop application
+- Claude Desktop application installed
 
-## 🚀 Installation
+## Installation
 
-### Automatic Installation (Recommended)
+### Option 1: Using npx (Recommended)
 
-1. Clone this repository:
+The easiest way to install is using npx:
+
 ```bash
-git clone https://github.com/Arnoutopya/claude-google-images-mcp.git
+npx @arnoutopya/claude-google-images-mcp setup
 ```
 
-2. Navigate to the project directory:
+This will automatically:
+1. Install the MCP package
+2. Configure Claude Desktop to use the MCP server
+3. Set up the necessary configuration
+
+### Option 2: Manual Configuration
+
+If you prefer to manually configure Claude Desktop:
+
+1. Install the package globally:
 ```bash
-cd claude-google-images-mcp
+npm install -g @arnoutopya/claude-google-images-mcp
 ```
 
-3. Run the installation script:
-```bash
-npm run install-mcp
+2. Edit your Claude Desktop configuration file:
+   - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - Linux: `~/.config/Claude/claude_desktop_config.json`
+
+3. Add the following to the JSON configuration:
+```json
+{
+  "mcpServers": {
+    "google-images-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@arnoutopya/claude-google-images-mcp"
+      ]
+    }
+  }
+}
 ```
+Note: If the file already contains a "mcpServers" section, add the "google-images-mcp" entry to it.
 
-The script will automatically detect your Claude Desktop installation and install the MCP.
+4. Restart Claude Desktop
 
-### Manual Installation
+## Usage
 
-1. Clone this repository:
-```bash
-git clone https://github.com/Arnoutopya/claude-google-images-mcp.git
-```
-
-2. Navigate to the project directory:
-```bash
-cd claude-google-images-mcp
-```
-
-3. Install dependencies:
-```bash
-npm install
-```
-
-4. Copy the files to your Claude Desktop mods directory:
-   - Windows: `%APPDATA%\Claude Desktop\mods\google-images-mcp`
-   - macOS: `~/Library/Application Support/Claude Desktop/mods/google-images-mcp`
-   - Linux: `~/.config/Claude Desktop/mods/google-images-mcp`
-
-5. Restart Claude Desktop if it's already running
-
-## 🔍 Usage
-
-Once installed, you can use the Google Images MCP with these commands:
+Once installed, you can use these commands in Claude Desktop:
 
 ### Search for Images
 
 ```
-/google-images [search query]
+/google_images_search [your search query]
 ```
 
-Example: `/google-images nature landscapes`
+Example:
+```
+/google_images_search cute puppies
+```
+
+This will show a grid of image results that you can browse directly in Claude.
 
 ### Configure Settings
 
 ```
-/google-images-config [options]
+/google_images_config [options]
 ```
 
-Options:
-- `maxResults=[number]`: Number of images per page (default: 20)
-- `safeSearch=[true/false]`: Enable/disable safe search
-- `imageType=[type]`: Filter by image type (all, photo, clipart, lineart, animated)
+Available options:
+- `safeSearch=[true/false]` - Enable or disable safe search (default: true)
+- `imageType=[all/photo/clipart/lineart/animated]` - Filter by image type
+- `maxResults=[number]` - Number of results to show per page (default: 20)
 
-Example: `/google-images-config maxResults=30 safeSearch=true imageType=photo`
-
-### Get Help
-
+Example:
 ```
-/google-images-help
+/google_images_config safeSearch=false imageType=photo maxResults=30
 ```
 
-Shows detailed help information for using the MCP.
+### Download Images
 
-## ⚙️ Configuration
+When viewing search results, you can download any image by clicking the download button that appears beneath it.
 
-You can customize the MCP by modifying the `config.js` file:
+## Troubleshooting
 
-```javascript
-module.exports = {
-  defaults: {
-    maxResults: 20,
-    safeSearch: true,
-    imageType: 'all',
-    // ... other options
-  },
-  // ... other configurations
-};
+### MCP Server Not Starting
+
+If the MCP server fails to start:
+
+1. Check that you have Node.js 14+ installed:
+```bash
+node --version
 ```
 
-## 📚 Documentation
+2. Ensure the package is installed:
+```bash
+npm list -g @arnoutopya/claude-google-images-mcp
+```
 
-For detailed information about all features and options, please check the [DOCUMENTATION.md](DOCUMENTATION.md) file.
+3. Verify the Claude Desktop configuration:
+```bash
+cat "~/Library/Application Support/Claude/claude_desktop_config.json"
+```
+(Adjust the path for your operating system)
 
-## 🛠️ Development
+### Connection Issues
 
-To set up the development environment:
+If Claude Desktop shows "Connection error" when trying to use the MCP:
 
-1. Clone the repository
-2. Install dependencies with `npm install`
-3. Make your changes
-4. Test the MCP by loading it into Claude Desktop
+1. Ensure Claude Desktop is restarted after installation
+2. Check for any firewall issues blocking local connections
+3. Verify no other services are using port 8033
 
-## 🤝 Contributing
+## Development
 
-Contributions are welcome! Here's how you can contribute:
+To contribute to this project:
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+1. Clone the repository:
+```bash
+git clone https://github.com/Arnoutopya/claude-google-images-mcp.git
+```
 
-## 📝 License
+2. Install dependencies:
+```bash
+cd claude-google-images-mcp
+npm install
+```
+
+3. Run the server locally:
+```bash
+node server.js
+```
+
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ⚠️ Disclaimer
+## Disclaimer
 
-This MCP is for educational purposes only. Please respect Google's terms of service and copyright laws when using this tool. The creators of this MCP are not responsible for any misuse or violation of terms.
+This tool is for educational and personal use only. Please respect Google's terms of service and copyright laws when using images. The creators of this MCP are not responsible for any misuse or violation of terms.
 
-## 🙏 Acknowledgements
+## Acknowledgements
 
-This project was inspired by several open-source projects:
-
-- [Google Images Scraper](https://github.com/talleyhoe/google-image-scraper)
-- [image_search](https://github.com/rushilsrivastava/image_search)
-- Other community contributions to web scraping and image search tools
+This project was inspired by other MCP implementations including:
+- [Desktop Commander MCP](https://github.com/wonderwhy-er/DesktopCommanderMCP)
+- Various Google Images scraping tools in the open-source community
 
 ---
 
