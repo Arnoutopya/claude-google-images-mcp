@@ -5,6 +5,15 @@
 
 A Model Context Protocol (MCP) server for Claude Desktop that enables Google Images search directly within Claude. This MCP allows Claude to search, browse, and download images from Google Images with simple commands.
 
+## Quick Install
+
+```bash
+# Install directly from GitHub
+npx github:Arnoutopya/claude-google-images-mcp setup
+```
+
+Then restart Claude Desktop.
+
 ## Features
 
 - **Google Images Search**: Search for images using natural language queries
@@ -18,28 +27,32 @@ A Model Context Protocol (MCP) server for Claude Desktop that enables Google Ima
 - Node.js 14.0.0 or higher
 - Claude Desktop application installed
 
-## Installation
+## Installation Methods
 
-### Option 1: Using npx (Recommended)
-
-The easiest way to install is using npx:
+### Method 1: Install from GitHub (Recommended)
 
 ```bash
-npx @arnoutopya/claude-google-images-mcp setup
+npx github:Arnoutopya/claude-google-images-mcp setup
 ```
 
-This will automatically:
-1. Install the MCP package
-2. Configure Claude Desktop to use the MCP server
-3. Set up the necessary configuration
+### Method 2: Clone and Install Locally
 
-### Option 2: Manual Configuration
+```bash
+git clone https://github.com/Arnoutopya/claude-google-images-mcp.git
+cd claude-google-images-mcp
+npm install
+node install.js
+```
+
+### Method 3: Manual Configuration
 
 If you prefer to manually configure Claude Desktop:
 
-1. Install the package globally:
+1. Clone this repository:
 ```bash
-npm install -g @arnoutopya/claude-google-images-mcp
+git clone https://github.com/Arnoutopya/claude-google-images-mcp.git
+cd claude-google-images-mcp
+npm install
 ```
 
 2. Edit your Claude Desktop configuration file:
@@ -52,16 +65,15 @@ npm install -g @arnoutopya/claude-google-images-mcp
 {
   "mcpServers": {
     "google-images-mcp": {
-      "command": "npx",
+      "command": "node",
       "args": [
-        "-y",
-        "@arnoutopya/claude-google-images-mcp"
+        "/path/to/cloned/claude-google-images-mcp/server.js"
       ]
     }
   }
 }
 ```
-Note: If the file already contains a "mcpServers" section, add the "google-images-mcp" entry to it.
+Note: Replace `/path/to/cloned` with the actual path to your cloned repository.
 
 4. Restart Claude Desktop
 
@@ -113,9 +125,9 @@ If the MCP server fails to start:
 node --version
 ```
 
-2. Ensure the package is installed:
+2. Try running the server manually to see any error messages:
 ```bash
-npm list -g @arnoutopya/claude-google-images-mcp
+node /path/to/claude-google-images-mcp/server.js
 ```
 
 3. Verify the Claude Desktop configuration:
@@ -136,21 +148,24 @@ If Claude Desktop shows "Connection error" when trying to use the MCP:
 
 To contribute to this project:
 
-1. Clone the repository:
+1. Fork the repository
+2. Clone your fork:
 ```bash
-git clone https://github.com/Arnoutopya/claude-google-images-mcp.git
+git clone https://github.com/YOUR-USERNAME/claude-google-images-mcp.git
 ```
 
-2. Install dependencies:
+3. Install dependencies:
 ```bash
 cd claude-google-images-mcp
 npm install
 ```
 
-3. Run the server locally:
+4. Run the server locally:
 ```bash
 node server.js
 ```
+
+5. Make your changes and submit a pull request
 
 ## License
 
