@@ -1,0 +1,31 @@
+{
+  "manifestVersion": "1.0",
+  "id": "google-images-mcp",
+  "name": "Google Images MCP",
+  "version": "1.0.0",
+  "description": "Search and download images from Google Images within Claude Desktop",
+  "author": "Arnoutopya",
+  "repository": "https://github.com/Arnoutopya/claude-google-images-mcp",
+  "main": "index.js",
+  "entryPoint": "register",
+  "commands": [
+    {
+      "name": "google-images",
+      "description": "Search for images on Google Images"
+    },
+    {
+      "name": "google-images-config",
+      "description": "Configure Google Images search settings"
+    },
+    {
+      "name": "google-images-help",
+      "description": "Show help for Google Images MCP"
+    }
+  ],
+  "permissions": [
+    "showUI",
+    "renderMarkdown",
+    "fileSystem"
+  ],
+  "minClaudeVersion": "1.0.0"
+}
